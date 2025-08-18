@@ -1,0 +1,767 @@
+/*
+=============================================================================
+BLOCKVOTE - MAIN STYLESHEET
+=============================================================================
+
+LEARNING OBJECTIVES FOR THIS FILE:
+- Understand CSS fundamentals (selectors, properties, values)
+- Learn about CSS Grid and Flexbox for layout
+- Practice responsive design principles
+- See how to create professional-looking interfaces
+- Understand CSS custom properties (variables)
+
+DIFFICULTY LEVEL: Beginner to Intermediate
+
+CSS ORGANIZATION:
+1. CSS Reset and Base Styles
+2. CSS Custom Properties (Variables)
+3. Layout Components
+4. Interactive Elements
+5. Animations and Transitions
+
+=============================================================================
+*/
+
+/* 
+=============================================================================
+1. CSS RESET AND BASE STYLES
+=============================================================================
+CSS Reset removes default browser styling to ensure consistency across browsers
+*/
+
+/* Universal selector (*) applies to ALL elements */
+* {
+    /* Remove default margin and padding from all elements */
+    margin: 0;
+    padding: 0;
+    
+    /* box-sizing: border-box makes width/height include padding and border */
+    /* This makes sizing calculations much easier and more predictable */
+    box-sizing: border-box;
+}
+
+/* 
+=============================================================================
+2. CSS CUSTOM PROPERTIES (VARIABLES)
+=============================================================================
+CSS variables let us store values and reuse them throughout our stylesheet
+This makes it easy to maintain consistent colors, spacing, etc.
+Variables are defined in :root and can be used anywhere with var(--variable-name)
+*/
+
+:root {
+    /* COLOR PALETTE */
+    /* Primary colors for main interface elements */
+    --primary-color: #2563eb;        /* Blue - for buttons, links */
+    --primary-dark: #1d4ed8;         /* Darker blue - for hover states */
+    --primary-light: #dbeafe;        /* Light blue - for backgrounds */
+    
+    /* Secondary colors for accents and highlights */
+    --secondary-color: #10b981;      /* Green - for success states */
+    --secondary-dark: #059669;       /* Dark green - for hover */
+    
+    /* Neutral colors for text and backgrounds */
+    --background-color: #f8fafc;     /* Very light gray - page background */
+    --surface-color: #ffffff;        /* White - card backgrounds */
+    --border-color: #e2e8f0;         /* Light gray - borders */
+    
+    /* Text colors with different opacity levels */
+    --text-primary: #1e293b;         /* Dark gray - main text */
+    --text-secondary: #64748b;       /* Medium gray - secondary text */
+    --text-muted: #94a3b8;           /* Light gray - muted text */
+    
+    /* Status colors for different states */
+    --success-color: #10b981;        /* Green - success messages */
+    --warning-color: #f59e0b;        /* Orange - warnings */
+    --error-color: #ef4444;          /* Red - errors */
+    
+    /* SPACING SYSTEM */
+    /* Consistent spacing values based on 8px grid system */
+    --spacing-xs: 0.25rem;   /* 4px */
+    --spacing-sm: 0.5rem;    /* 8px */
+    --spacing-md: 1rem;      /* 16px */
+    --spacing-lg: 1.5rem;    /* 24px */
+    --spacing-xl: 2rem;      /* 32px */
+    --spacing-2xl: 3rem;     /* 48px */
+    
+    /* TYPOGRAPHY */
+    /* Font families for different text types */
+    --font-primary: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'Fira Code', 'Monaco', 'Consolas', monospace;
+    
+    /* Font sizes using rem units (relative to root font size) */
+    --text-xs: 0.75rem;      /* 12px */
+    --text-sm: 0.875rem;     /* 14px */
+    --text-base: 1rem;       /* 16px */
+    --text-lg: 1.125rem;     /* 18px */
+    --text-xl: 1.25rem;      /* 20px */
+    --text-2xl: 1.5rem;      /* 24px */
+    --text-3xl: 1.875rem;    /* 30px */
+    
+    /* LAYOUT */
+    /* Maximum width for content containers */
+    --container-max-width: 1200px;
+    
+    /* Border radius for rounded corners */
+    --border-radius-sm: 0.25rem;     /* 4px */
+    --border-radius-md: 0.5rem;      /* 8px */
+    --border-radius-lg: 0.75rem;     /* 12px */
+    
+    /* Box shadows for depth and elevation */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* 
+=============================================================================
+3. BASE ELEMENT STYLES
+=============================================================================
+Styling for basic HTML elements
+*/
+
+/* Body element - sets up the overall page appearance */
+body {
+    /* Use our primary font family */
+    font-family: var(--font-primary);
+    
+    /* Set base font size and line height for readability */
+    font-size: var(--text-base);
+    line-height: 1.6; /* 1.6 times the font size for good readability */
+    
+    /* Set text and background colors */
+    color: var(--text-primary);
+    background-color: var(--background-color);
+    
+    /* Smooth scrolling when clicking anchor links */
+    scroll-behavior: smooth;
+}
+
+/* Heading styles - create visual hierarchy */
+h1, h2, h3, h4, h5, h6 {
+    /* Slightly tighter line height for headings */
+    line-height: 1.3;
+    
+    /* Add some space below headings */
+    margin-bottom: var(--spacing-md);
+    
+    /* Make headings slightly bolder */
+    font-weight: 600;
+}
+
+/* Specific heading sizes */
+h1 { font-size: var(--text-3xl); }
+h2 { font-size: var(--text-2xl); }
+h3 { font-size: var(--text-xl); }
+
+/* Paragraph spacing */
+p {
+    margin-bottom: var(--spacing-md);
+}
+
+/* Link styles */
+a {
+    color: var(--primary-color);
+    text-decoration: none; /* Remove underline */
+    
+    /* Smooth transition when hovering */
+    transition: color 0.2s ease;
+}
+
+/* Link hover effect */
+a:hover {
+    color: var(--primary-dark);
+    text-decoration: underline;
+}
+
+/* 
+=============================================================================
+4. LAYOUT COMPONENTS
+=============================================================================
+Reusable layout classes for consistent spacing and structure
+*/
+
+/* Container class - centers content and sets max width */
+.container {
+    /* Set maximum width and center the container */
+    max-width: var(--container-max-width);
+    margin: 0 auto; /* 0 top/bottom, auto left/right centers it */
+    
+    /* Add padding on sides for mobile devices */
+    padding: 0 var(--spacing-md);
+}
+
+/* 
+=============================================================================
+5. HEADER STYLES
+=============================================================================
+Styling for the top navigation and branding area
+*/
+
+.app-header {
+    /* White background with subtle shadow */
+    background-color: var(--surface-color);
+    box-shadow: var(--shadow-sm);
+    
+    /* Add padding inside the header */
+    padding: var(--spacing-lg) 0;
+    
+    /* Stick to top of page when scrolling */
+    position: sticky;
+    top: 0;
+    z-index: 100; /* High z-index to stay above other content */
+}
+
+/* Header container uses flexbox for layout */
+.app-header .container {
+    /* Flexbox: arrange children in a row */
+    display: flex;
+    
+    /* Space between logo and wallet sections */
+    justify-content: space-between;
+    
+    /* Center items vertically */
+    align-items: center;
+}
+
+/* Logo section styling */
+.logo-section {
+    /* Flexbox for icon and text alignment */
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md); /* Space between icon and text */
+}
+
+.logo-section i {
+    /* Large icon size and primary color */
+    font-size: var(--text-2xl);
+    color: var(--primary-color);
+}
+
+.logo-section h1 {
+    /* Remove default margin since we're using flexbox gap */
+    margin: 0;
+    color: var(--text-primary);
+}
+
+.tagline {
+    /* Smaller, muted text for the tagline */
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    margin: 0;
+}
+
+/* 
+=============================================================================
+6. WALLET CONNECTION STYLES
+=============================================================================
+Styling for wallet connection button and status display
+*/
+
+.wallet-btn {
+    /* Button styling */
+    background-color: var(--primary-color);
+    color: white;
+    border: none; /* Remove default button border */
+    
+    /* Padding and spacing */
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--border-radius-md);
+    
+    /* Typography */
+    font-size: var(--text-base);
+    font-weight: 500;
+    
+    /* Flexbox for icon and text alignment */
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    
+    /* Smooth transitions for hover effects */
+    transition: all 0.2s ease;
+    
+    /* Pointer cursor on hover */
+    cursor: pointer;
+}
+
+/* Wallet button hover effect */
+.wallet-btn:hover {
+    background-color: var(--primary-dark);
+    
+    /* Slight scale effect on hover */
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+/* Wallet info display (shown after connection) */
+.wallet-info {
+    /* Card-like appearance */
+    background-color: var(--primary-light);
+    border: 1px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-md);
+    
+    /* Typography */
+    font-size: var(--text-sm);
+}
+
+.wallet-address {
+    /* Monospace font for wallet addresses (easier to read) */
+    font-family: var(--font-mono);
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.network-info {
+    /* Muted text for network information */
+    color: var(--text-secondary);
+    margin-top: var(--spacing-xs);
+}
+
+/* 
+=============================================================================
+7. MAIN CONTENT STYLES
+=============================================================================
+Styling for the main voting interface
+*/
+
+.main-content {
+    /* Add space above and below main content */
+    padding: var(--spacing-2xl) 0;
+}
+
+/* Poll section styling */
+.poll-section {
+    /* Card appearance with white background and shadow */
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius-lg);
+    box-shadow: var(--shadow-md);
+    padding: var(--spacing-2xl);
+    
+    /* Space below this section */
+    margin-bottom: var(--spacing-2xl);
+}
+
+/* Poll header with title and metadata */
+.poll-header {
+    /* Space below the header */
+    margin-bottom: var(--spacing-xl);
+    
+    /* Center align the content */
+    text-align: center;
+}
+
+.poll-meta {
+    /* Flexbox for horizontal layout of metadata */
+    display: flex;
+    justify-content: center;
+    gap: var(--spacing-lg);
+    
+    /* Wrap to new line on small screens */
+    flex-wrap: wrap;
+    
+    /* Space above metadata */
+    margin-top: var(--spacing-md);
+}
+
+.poll-meta span {
+    /* Styling for each metadata item */
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+    
+    /* Add padding and background for pill-like appearance */
+    padding: var(--spacing-xs) var(--spacing-md);
+    background-color: var(--background-color);
+    border-radius: var(--border-radius-sm);
+}
+
+/* Special styling for active poll status */
+.poll-status {
+    background-color: var(--success-color) !important;
+    color: white !important;
+}
+
+/* 
+=============================================================================
+8. VOTING OPTIONS STYLES
+=============================================================================
+Styling for the voting option cards
+*/
+
+.voting-options {
+    /* Grid layout for voting options */
+    display: grid;
+    gap: var(--spacing-md);
+    
+    /* Space below voting options */
+    margin-bottom: var(--spacing-xl);
+}
+
+/* Individual voting option card */
+.vote-option {
+    /* Card styling */
+    border: 2px solid var(--border-color);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+    
+    /* Smooth transitions for interactions */
+    transition: all 0.2s ease;
+    
+    /* Pointer cursor to indicate clickability */
+    cursor: pointer;
+}
+
+/* Hover effect for voting options */
+.vote-option:hover {
+    border-color: var(--primary-color);
+    box-shadow: var(--shadow-md);
+}
+
+/* Selected voting option styling */
+.vote-option.selected {
+    border-color: var(--primary-color);
+    background-color: var(--primary-light);
+}
+
+/* Vote option header with name and count */
+.vote-option-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--spacing-md);
+}
+
+.option-name {
+    font-weight: 600;
+    font-size: var(--text-lg);
+}
+
+.vote-count {
+    font-size: var(--text-sm);
+    color: var(--text-secondary);
+}
+
+/* Progress bar for vote percentage */
+.vote-progress {
+    /* Container for the progress bar */
+    background-color: var(--background-color);
+    border-radius: var(--border-radius-sm);
+    height: 8px;
+    overflow: hidden; /* Hide overflow for rounded corners */
+}
+
+.vote-progress-fill {
+    /* The filled portion of the progress bar */
+    background-color: var(--primary-color);
+    height: 100%;
+    border-radius: var(--border-radius-sm);
+    
+    /* Smooth animation when percentage changes */
+    transition: width 0.3s ease;
+    
+    /* Start with 0 width */
+    width: 0%;
+}
+
+/* 
+=============================================================================
+9. VOTE SUBMISSION STYLES
+=============================================================================
+Styling for vote submission area
+*/
+
+.vote-submission {
+    /* Center the submission area */
+    text-align: center;
+}
+
+.selected-option {
+    /* Card styling for selected option display */
+    background-color: var(--primary-light);
+    border: 1px solid var(--primary-color);
+    border-radius: var(--border-radius-md);
+    padding: var(--spacing-lg);
+}
+
+.submit-btn {
+    /* Primary button styling */
+    background-color: var(--success-color);
+    color: white;
+    border: none;
+    padding: var(--spacing-md) var(--spacing-xl);
+    border-radius: var(--border-radius-md);
+    font-size: var(--text-base);
+    font-weight: 600;
+    
+    /* Flexbox for icon alignment */
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    
+    /* Smooth transitions */
+    transition: all 0.2s ease;
+    cursor: pointer;
+    
+    /* Space to the right */
+    margin-right: var(--spacing-md);
+}
+
+.submit-btn:hover {
+    background-color: var(--secondary-dark);
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-md);
+}
+
+.cancel-btn {
+    /* Secondary button styling */
+    background-color: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-color);
+    padding: var(--spacing-md) var(--spacing-lg);
+    border-radius: var(--border-radius-md);
+    font-size: var(--text-base);
+    
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.cancel-btn:hover {
+    background-color: var(--background-color);
+    border-color: var(--text-secondary);
+}
+
+/* 
+=============================================================================
+10. TRANSACTION STATUS STYLES
+=============================================================================
+Styling for blockchain transaction feedback
+*/
+
+.transaction-section {
+    margin-bottom: var(--spacing-2xl);
+}
+
+.transaction-status {
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-2xl);
+    text-align: center;
+}
+
+/* Loading spinner animation */
+.loading-spinner i {
+    font-size: var(--text-2xl);
+    color: var(--primary-color);
+    
+    /* CSS animation for spinning effect */
+    animation: spin 1s linear infinite;
+}
+
+/* Keyframe animation for spinner */
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+/* Success state styling */
+.transaction-success {
+    color: var(--success-color);
+}
+
+.transaction-success i {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--spacing-md);
+}
+
+/* Error state styling */
+.transaction-error {
+    color: var(--error-color);
+}
+
+.transaction-error i {
+    font-size: var(--text-3xl);
+    margin-bottom: var(--spacing-md);
+}
+
+/* Transaction link styling */
+.transaction-link {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--spacing-sm);
+    margin-top: var(--spacing-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    background-color: var(--primary-light);
+    border-radius: var(--border-radius-sm);
+    font-size: var(--text-sm);
+}
+
+/* 
+=============================================================================
+11. ACTIVITY FEED STYLES
+=============================================================================
+Styling for voting history and activity
+*/
+
+.history-section {
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-2xl);
+    box-shadow: var(--shadow-md);
+}
+
+.activity-feed {
+    margin-top: var(--spacing-lg);
+}
+
+.activity-item {
+    display: flex;
+    align-items: center;
+    gap: var(--spacing-md);
+    padding: var(--spacing-md);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.activity-item:last-child {
+    border-bottom: none;
+}
+
+.activity-item i {
+    color: var(--primary-color);
+    font-size: var(--text-lg);
+}
+
+.verify-link {
+    margin-left: auto;
+    font-size: var(--text-sm);
+    color: var(--primary-color);
+}
+
+/* 
+=============================================================================
+12. FOOTER STYLES
+=============================================================================
+Styling for the educational footer section
+*/
+
+.app-footer {
+    background-color: var(--text-primary);
+    color: white;
+    padding: var(--spacing-2xl) 0;
+    margin-top: var(--spacing-2xl);
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: var(--spacing-2xl);
+}
+
+.educational-info h4 {
+    margin-bottom: var(--spacing-md);
+    color: var(--primary-light);
+}
+
+.educational-info ul {
+    list-style: none;
+}
+
+.educational-info li {
+    margin-bottom: var(--spacing-sm);
+}
+
+.educational-info a {
+    color: white;
+    text-decoration: none;
+}
+
+.educational-info a:hover {
+    color: var(--primary-light);
+}
+
+.project-info {
+    text-align: right;
+}
+
+.project-info p {
+    margin-bottom: var(--spacing-sm);
+    color: var(--text-muted);
+}
+
+/* 
+=============================================================================
+13. MODAL STYLES
+=============================================================================
+Styling for educational information modal
+*/
+
+.modal {
+    /* Fixed positioning to cover entire screen */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    
+    /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.5);
+    
+    /* Center the modal content */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+    /* High z-index to appear above everything */
+    z-index: 1000;
+}
+
+.modal-content {
+    background-color: var(--surface-color);
+    border-radius: var(--border-radius-lg);
+    padding: var(--spacing-2xl);
+    max-width: 600px;
+    max-height: 80vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.close-modal {
+    position: absolute;
+    top: var(--spacing-md);
+    right: var(--spacing-lg);
+    font-size: var(--text-2xl);
+    cursor: pointer;
+    color: var(--text-secondary);
+}
+
+.close-modal:hover {
+    color: var(--text-primary);
+}
+
+/* 
+=============================================================================
+14. UTILITY CLASSES
+=============================================================================
+Reusable utility classes for common styling needs
+*/
+
+/* Text alignment utilities */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+/* Margin utilities */
+.mt-0 { margin-top: 0; }
+.mb-0 { margin-bottom: 0; }
+.mt-1 { margin-top: var(--spacing-sm); }
+.mb-1 { margin-bottom: var(--spacing-sm); }
+
+/* Display utilities */
+.hidden { display: none; }
+.block { display: block; }
+.flex { display: flex; }
+
+/* Color utilities */
+.text-primary { color: var(--text-primary); }
+.text-secondary { color: var(--text-secondary); }
+.text-success { color: var(--success-color); }
+.text-error { color: var(--error-color); }

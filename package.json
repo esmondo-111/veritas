@@ -1,0 +1,37 @@
+{
+  "name": "blockvote-student-template",
+  "version": "1.0.0",
+  "description": "Learn JavaScript & Web3 by building a blockchain voting application",
+  "main": "index.html",
+  "scripts": {
+    "start": "npx http-server -p 8000 -o",
+    "dev": "npx http-server -p 8000 -o",
+    "serve": "python -m http.server 8000"
+  },
+  "keywords": [
+    "javascript",
+    "web3",
+    "blockchain",
+    "ethereum",
+    "education",
+    "tutorial",
+    "voting",
+    "dapp"
+  ],
+  "author": "BlockVote Educational Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/blockvote-student-template"
+  },
+  "bugs": {
+    "url": "https://github.com/your-username/blockvote-student-template/issues"
+  },
+  "homepage": "https://github.com/your-username/blockvote-student-template#readme",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

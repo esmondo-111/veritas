@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- 
+    =============================================================================
+    BLOCKVOTE - STUDENT TEMPLATE HTML
+    =============================================================================
+    
+    🎓 STUDENT INSTRUCTIONS:
+    This is your template HTML file! It's already complete and ready to use.
+    Focus on completing the JavaScript template files instead.
+    
+    📚 LEARNING OBJECTIVES FOR THIS FILE:
+    - Understand HTML5 semantic structure
+    - Learn about responsive design meta tags
+    - See how to organize CSS and JavaScript files
+    - Practice linking external resources
+    
+    🚀 WHAT'S DIFFERENT FROM THE COMPLETE VERSION:
+    - Links to template JavaScript files instead of complete ones
+    - Same HTML structure for consistency
+    - All CSS styling remains the same
+    
+    DIFFICULTY LEVEL: Beginner (Reference Only)
+    =============================================================================
+    -->
+    
+    <!-- This tells the browser we're using HTML5 -->
+    <meta charset="UTF-8">
+    
+    <!-- This makes the website responsive on mobile devices -->
+    <!-- viewport = the visible area of a web page -->
+    <!-- width=device-width means use the device's actual width -->
+    <!-- initial-scale=1.0 means don't zoom in or out when page loads -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- The title that appears in the browser tab -->
+    <title>BlockVote - Student Template</title>
+    
+    <!-- Link to our main CSS file for styling -->
+    <!-- rel="stylesheet" tells browser this is a CSS file -->
+    <!-- href is the path to our CSS file -->
+    <link rel="stylesheet" href="styles/main.css">
+    
+    <!-- Link to responsive CSS for mobile devices -->
+    <link rel="stylesheet" href="styles/responsive.css">
+    
+    <!-- Font Awesome for icons (like wallet, vote icons) -->
+    <!-- This is a CDN (Content Delivery Network) link -->
+    <!-- CDN = files hosted on external servers for faster loading -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- 
+    =============================================================================
+    MAIN APPLICATION STRUCTURE
+    =============================================================================
+    We use semantic HTML5 elements for better structure:
+    - <header> for the top navigation/title area
+    - <main> for the primary content
+    - <section> for distinct content areas
+    - <footer> for bottom information
+    =============================================================================
+    -->
+    
+    <!-- HEADER SECTION: Contains app title and wallet connection -->
+    <header class="app-header">
+        <div class="container">
+            <!-- App logo and title -->
+            <div class="logo-section">
+                <!-- Font Awesome icon for blockchain/vote theme -->
+                <i class="fas fa-vote-yea"></i>
+                <h1>BlockVote</h1>
+                <p class="tagline">Student Template • Learn by Building</p>
+            </div>
+            
+            <!-- Wallet connection area -->
+            <div class="wallet-section">
+                <!-- This button will trigger wallet connection -->
+                <!-- onclick calls a JavaScript function when clicked -->
+                <button id="connect-wallet-btn" class="wallet-btn" onclick="connectWallet()">
+                    <i class="fas fa-wallet"></i>
+                    Connect Wallet
+                </button>
+                
+                <!-- This div will show wallet info after connection -->
+                <!-- Initially hidden with CSS display: none -->
+                <div id="wallet-info" class="wallet-info" style="display: none;">
+                    <div class="wallet-address" id="wallet-address">Not Connected</div>
+                    <div class="network-info" id="network-info">Network: Not Connected</div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT AREA -->
+    <main class="main-content">
+        <div class="container">
+            
+            <!-- 
+            =============================================================================
+            STUDENT PROGRESS INDICATOR
+            =============================================================================
+            This section shows students their current progress through the modules
+            =============================================================================
+            -->
+            
+            <section class="progress-section">
+                <div class="progress-header">
+                    <h2>📚 Your Learning Progress</h2>
+                    <p>Complete each module to unlock the next one!</p>
+                </div>
+                
+                <div class="progress-modules">
+                    <div class="progress-module" id="module-1">
+                        <div class="module-icon">1️⃣</div>
+                        <div class="module-info">
+                            <h3>Module 1: JavaScript Fundamentals</h3>
+                            <p>Variables, functions, DOM manipulation</p>
+                            <div class="module-status">🔄 In Progress</div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-module locked" id="module-2">
+                        <div class="module-icon">2️⃣</div>
+                        <div class="module-info">
+                            <h3>Module 2: Interactive UI</h3>
+                            <p>Creating dynamic elements, event handling</p>
+                            <div class="module-status">🔒 Locked</div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-module locked" id="module-3">
+                        <div class="module-icon">3️⃣</div>
+                        <div class="module-info">
+                            <h3>Module 3: Web3 Integration</h3>
+                            <p>MetaMask connection, wallet management</p>
+                            <div class="module-status">🔒 Locked</div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-module locked" id="module-4">
+                        <div class="module-icon">4️⃣</div>
+                        <div class="module-info">
+                            <h3>Module 4: Blockchain Transactions</h3>
+                            <p>Vote submission, transaction handling</p>
+                            <div class="module-status">🔒 Locked</div>
+                        </div>
+                    </div>
+                    
+                    <div class="progress-module locked" id="module-5">
+                        <div class="module-icon">5️⃣</div>
+                        <div class="module-info">
+                            <h3>Module 5: Advanced Features</h3>
+                            <p>Activity feeds, real-time updates</p>
+                            <div class="module-status">🔒 Locked</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="progress-actions">
+                    <button onclick="validateModule1()" class="validate-btn">
+                        🧪 Test Module 1
+                    </button>
+                    <button onclick="window.open('STUDENT-GUIDE.md')" class="guide-btn">
+                        📖 Open Student Guide
+                    </button>
+                </div>
+            </section>
+            
+            <!-- 
+            =============================================================================
+            VOTING INTERFACE SECTION
+            =============================================================================
+            This section contains:
+            1. Current poll information
+            2. Voting options
+            3. Vote submission form
+            4. Real-time results display
+            =============================================================================
+            -->
+            
+            <!-- Current Poll Display -->
+            <section class="poll-section">
+                <div class="poll-header">
+                    <h2 id="poll-title">Complete Module 1 to see your poll!</h2>
+                    <div class="poll-meta">
+                        <!-- These will be updated with real data as students progress -->
+                        <span class="poll-status" id="poll-status">Template Mode</span>
+                        <span class="total-votes" id="total-votes">Total Votes: 0</span>
+                        <span class="poll-deadline" id="poll-deadline">Complete modules to activate</span>
+                    </div>
+                </div>
+
+                <!-- Voting Options Container -->
+                <!-- This div will be populated dynamically with JavaScript -->
+                <div class="voting-options" id="voting-options">
+                    <!-- 
+                    JavaScript will create voting option cards here
+                    Students will implement this in Module 2
+                    -->
+                </div>
+
+                <!-- Vote Submission Area -->
+                <div class="vote-submission">
+                    <div class="selected-option" id="selected-option" style="display: none;">
+                        <p>You selected: <span id="selected-choice"></span></p>
+                        <button id="submit-vote-btn" class="submit-btn" onclick="submitVote()">
+                            <i class="fas fa-check-circle"></i>
+                            Cast Your Vote
+                        </button>
+                        <button id="cancel-selection-btn" class="cancel-btn" onclick="cancelSelection()">
+                            Cancel
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 
+            =============================================================================
+            TRANSACTION STATUS SECTION
+            =============================================================================
+            This section shows:
+            - Loading states during blockchain transactions
+            - Success/error messages
+            - Transaction hash links to blockchain explorer
+            =============================================================================
+            -->
+            
+            <section class="transaction-section" id="transaction-section" style="display: none;">
+                <div class="transaction-status">
+                    <div class="loading-spinner" id="loading-spinner" style="display: none;">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        <p>Processing your vote on the blockchain...</p>
+                        <small>This may take 15-30 seconds</small>
+                    </div>
+                    
+                    <div class="transaction-success" id="transaction-success" style="display: none;">
+                        <i class="fas fa-check-circle"></i>
+                        <h3>Vote Successfully Cast!</h3>
+                        <p>Your vote has been recorded on the blockchain.</p>
+                        <a id="transaction-link" href="#" target="_blank" class="transaction-link">
+                            View Transaction
+                        </a>
+                    </div>
+                    
+                    <div class="transaction-error" id="transaction-error" style="display: none;">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <h3>Transaction Failed</h3>
+                        <p id="error-message">Something went wrong. Please try again.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 
+            =============================================================================
+            LEARNING RESOURCES SECTION
+            =============================================================================
+            Educational content and helpful links for students
+            =============================================================================
+            -->
+            
+            <section class="learning-section">
+                <h3>📚 Learning Resources</h3>
+                <div class="learning-grid">
+                    <div class="learning-card">
+                        <i class="fas fa-book"></i>
+                        <h4>Student Guide</h4>
+                        <p>Step-by-step instructions for each module</p>
+                        <button onclick="window.open('STUDENT-GUIDE.md')" class="resource-btn">
+                            Open Guide
+                        </button>
+                    </div>
+                    
+                    <div class="learning-card">
+                        <i class="fas fa-code"></i>
+                        <h4>Complete Reference</h4>
+                        <p>See the finished code for comparison</p>
+                        <button onclick="window.open('app.js')" class="resource-btn">
+                            View Complete Code
+                        </button>
+                    </div>
+                    
+                    <div class="learning-card">
+                        <i class="fas fa-question-circle"></i>
+                        <h4>Troubleshooting</h4>
+                        <p>Common issues and solutions</p>
+                        <button onclick="showTroubleshootingModal()" class="resource-btn">
+                            Get Help
+                        </button>
+                    </div>
+                    
+                    <div class="learning-card">
+                        <i class="fas fa-external-link-alt"></i>
+                        <h4>External Resources</h4>
+                        <p>MDN, Ethereum.org, MetaMask docs</p>
+                        <button onclick="showExternalResources()" class="resource-btn">
+                            View Links
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 
+            =============================================================================
+            VOTING HISTORY SECTION
+            =============================================================================
+            Shows transparency features:
+            - Recent votes (without revealing who voted for what)
+            - Transaction history
+            - Blockchain verification links
+            =============================================================================
+            -->
+            
+            <section class="history-section">
+                <h3>Recent Voting Activity</h3>
+                <div class="activity-feed" id="activity-feed">
+                    <!-- JavaScript will populate this with recent voting activity -->
+                    <div class="activity-item">
+                        <i class="fas fa-graduation-cap"></i>
+                        <span>Welcome to BlockVote! Start with Module 1 to begin learning.</span>
+                        <span class="activity-time">Just now</span>
+                    </div>
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <!-- 
+    =============================================================================
+    FOOTER SECTION
+    =============================================================================
+    Contains educational information and links
+    =============================================================================
+    -->
+    
+    <footer class="app-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="educational-info">
+                    <h4>Learning Objectives</h4>
+                    <ul>
+                        <li>✅ JavaScript Programming</li>
+                        <li>✅ DOM Manipulation</li>
+                        <li>✅ Web3 Integration</li>
+                        <li>✅ Blockchain Concepts</li>
+                        <li>✅ Professional Development</li>
+                    </ul>
+                </div>
+                
+                <div class="template-info">
+                    <h4>Template Features</h4>
+                    <ul>
+                        <li>📝 Progressive TODO exercises</li>
+                        <li>🧪 Built-in validation tests</li>
+                        <li>📖 Comprehensive documentation</li>
+                        <li>🎯 Real-world project outcome</li>
+                    </ul>
+                </div>
+                
+                <div class="project-info">
+                    <p>&copy; 2024 BlockVote Educational Template</p>
+                    <p>Built with ❤️ for learning JavaScript & Blockchain</p>
+                    <p>🎓 Complete all modules to unlock your portfolio project!</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 
+    =============================================================================
+    MODAL FOR EDUCATIONAL CONTENT
+    =============================================================================
+    This modal will show educational information and help content
+    =============================================================================
+    -->
+    
+    <div id="info-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <div id="modal-body">
+                <!-- Content will be inserted here by JavaScript -->
+            </div>
+        </div>
+    </div>
+
+    <!-- 
+    =============================================================================
+    JAVASCRIPT FILES - TEMPLATE VERSIONS
+    =============================================================================
+    We load the TEMPLATE JavaScript files instead of the complete ones
+    Students will complete the TODO sections in these files
+    =============================================================================
+    -->
+    
+    <!-- Main application logic - TEMPLATE VERSION -->
+    <script src="scripts/app.js"></script>
+    
+    <!-- Web3 and blockchain integration - TEMPLATE VERSION -->
+    <script src="scripts/web3.js"></script>
+    
+    <!-- Utility functions for educational modals and help -->
+    <script src="scripts/utils.js"></script>
+
+    <!-- 
+    =============================================================================
+    TEMPLATE-SPECIFIC JAVASCRIPT
+    =============================================================================
+    Additional functions specific to the template version
+    =============================================================================
+    -->
+    
+    <script>
+        // Template-specific functions for educational features
+        
+        function showTroubleshootingModal() {
+            const modal = document.getElementById('info-modal');
+            const modalBody = document.getElementById('modal-body');
+            
+            modalBody.innerHTML = `
+                <h2>🆘 Troubleshooting Guide</h2>
+                
+                <h3>Common Issues & Solutions</h3>
+                
+                <div class="troubleshooting-item">
+                    <h4>❌ "AppState is not defined"</h4>
+                    <p><strong>Solution:</strong> Complete TODO 1.1 in app-template.js</p>
+                    <p>Make sure you've defined the AppState object with all required properties.</p>
+                </div>
+                
+                <div class="troubleshooting-item">
+                    <h4>❌ "MetaMask not detected"</h4>
+                    <p><strong>Solution:</strong> Install MetaMask browser extension</p>
+                    <p>Visit <a href="https://metamask.io" target="_blank">metamask.io</a> to download.</p>
+                </div>
+                
+                <div class="troubleshooting-item">
+                    <h4>❌ Functions not working</h4>
+                    <p><strong>Solution:</strong> Check browser console for errors</p>
+                    <p>Press F12 → Console tab to see detailed error messages.</p>
+                </div>
+                
+                <div class="troubleshooting-item">
+                    <h4>❌ Validation tests failing</h4>
+                    <p><strong>Solution:</strong> Read the error messages carefully</p>
+                    <p>Each validation function tells you exactly what's missing.</p>
+                </div>
+                
+                <h3>Getting Help</h3>
+                <ul>
+                    <li>📖 Check the STUDENT-GUIDE.md for detailed instructions</li>
+                    <li>🔍 Use browser console to debug (F12)</li>
+                    <li>📝 Read the TODO comments carefully</li>
+                    <li>🧪 Run validation functions to check progress</li>
+                    <li>👀 Compare with the complete app.js file</li>
+                </ul>
+            `;
+            
+            modal.style.display = 'block';
+        }
+        
+        function showExternalResources() {
+            const modal = document.getElementById('info-modal');
+            const modalBody = document.getElementById('modal-body');
+            
+            modalBody.innerHTML = `
+                <h2>🔗 External Learning Resources</h2>
+                
+                <h3>JavaScript Learning</h3>
+                <ul>
+                    <li><a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide" target="_blank">MDN JavaScript Guide</a> - Comprehensive JavaScript reference</li>
+                    <li><a href="https://javascript.info/" target="_blank">JavaScript.info</a> - Modern JavaScript tutorial</li>
+                    <li><a href="https://www.freecodecamp.org/learn/javascript-algorithms-and-data-structures/" target="_blank">FreeCodeCamp JavaScript</a> - Interactive exercises</li>
+                </ul>
+                
+                <h3>Web3 & Blockchain</h3>
+                <ul>
+                    <li><a href="https://ethereum.org/en/developers/" target="_blank">Ethereum.org Developers</a> - Official Ethereum documentation</li>
+                    <li><a href="https://docs.metamask.io/" target="_blank">MetaMask Documentation</a> - Wallet integration guide</li>
+                    <li><a href="https://web3js.readthedocs.io/" target="_blank">Web3.js Documentation</a> - JavaScript blockchain library</li>
+                </ul>
+                
+                <h3>Development Tools</h3>
+                <ul>
+                    <li><a href="https://remix.ethereum.org/" target="_blank">Remix IDE</a> - Online Solidity development</li>
+                    <li><a href="https://sepolia.etherscan.io/" target="_blank">Sepolia Etherscan</a> - Blockchain explorer</li>
+                    <li><a href="https://sepoliafaucet.com/" target="_blank">Sepolia Faucet</a> - Get test ETH</li>
+                </ul>
+                
+                <h3>Additional Learning</h3>
+                <ul>
+                    <li><a href="https://cryptozombies.io/" target="_blank">CryptoZombies</a> - Learn Solidity through games</li>
+                    <li><a href="https://buildspace.so/" target="_blank">Buildspace</a> - Web3 project tutorials</li>
+                    <li><a href="https://www.youtube.com/c/DappUniversity" target="_blank">Dapp University</a> - Video tutorials</li>
+                </ul>
+            `;
+            
+            modal.style.display = 'block';
+        }
+        
+        function closeModal() {
+            const modal = document.getElementById('info-modal');
+            modal.style.display = 'none';
+        }
+        
+        // Close modal when clicking outside of it
+        window.onclick = function(event) {
+            const modal = document.getElementById('info-modal');
+            if (event.target === modal) {
+                modal.style.display = 'none';
+            }
+        }
+        
+        // Update progress indicators based on completed modules
+        function updateProgressDisplay() {
+            // This function will be enhanced as students complete modules
+            console.log('📊 Progress display updated');
+        }
+        
+        // Initialize template-specific features
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🎓 BlockVote Student Template Loaded!');
+            console.log('📖 Welcome! Start with Module 1 in app-template.js');
+            console.log('🧪 Run validateModule1() to test your progress');
+            
+            updateProgressDisplay();
+        });
+    </script>
+
+</body>
+</html>

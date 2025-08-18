@@ -1,0 +1,487 @@
+/*
+=============================================================================
+BLOCKVOTE - RESPONSIVE STYLESHEET
+=============================================================================
+
+LEARNING OBJECTIVES FOR THIS FILE:
+- Understand responsive design principles
+- Learn about CSS media queries
+- Practice mobile-first design approach
+- See how to adapt layouts for different screen sizes
+
+DIFFICULTY LEVEL: Intermediate
+
+RESPONSIVE BREAKPOINTS:
+- Mobile: 0px - 768px (default styles)
+- Tablet: 768px - 1024px
+- Desktop: 1024px+ (handled in main.css)
+
+=============================================================================
+*/
+
+/* 
+=============================================================================
+MOBILE-FIRST APPROACH
+=============================================================================
+We write CSS for mobile devices first, then use media queries to enhance
+for larger screens. This is considered best practice because:
+1. Mobile usage is dominant
+2. It's easier to enhance than to strip down
+3. Better performance on mobile devices
+=============================================================================
+*/
+
+/* 
+=============================================================================
+MOBILE STYLES (0px - 768px)
+=============================================================================
+These styles apply to all screen sizes by default
+*/
+
+/* Header adjustments for mobile */
+@media (max-width: 768px) {
+    /* 
+    Media query explanation:
+    - @media is the CSS rule for responsive design
+    - (max-width: 768px) means "apply these styles when screen is 768px or smaller"
+    - This targets mobile devices and small tablets
+    */
+    
+    .app-header .container {
+        /* Stack header elements vertically on mobile */
+        flex-direction: column;
+        gap: var(--spacing-lg);
+        
+        /* Center align everything */
+        text-align: center;
+    }
+    
+    .logo-section {
+        /* Stack logo elements vertically on very small screens */
+        flex-direction: column;
+        gap: var(--spacing-sm);
+    }
+    
+    .logo-section h1 {
+        /* Smaller title on mobile to fit better */
+        font-size: var(--text-2xl);
+    }
+    
+    .tagline {
+        /* Hide tagline on very small screens to save space */
+        display: none;
+    }
+    
+    .wallet-btn {
+        /* Full width button on mobile for easier tapping */
+        width: 100%;
+        justify-content: center;
+        
+        /* Larger padding for better touch targets */
+        padding: var(--spacing-lg);
+    }
+    
+    .wallet-info {
+        /* Full width wallet info on mobile */
+        width: 100%;
+        text-align: center;
+    }
+}
+
+/* 
+=============================================================================
+VERY SMALL MOBILE STYLES (0px - 480px)
+=============================================================================
+Additional adjustments for very small screens like older phones
+*/
+
+@media (max-width: 480px) {
+    /* 
+    This targets very small mobile devices
+    Common screen sizes: iPhone SE (375px), small Android phones
+    */
+    
+    .container {
+        /* Reduce side padding on very small screens */
+        padding: 0 var(--spacing-sm);
+    }
+    
+    .main-content {
+        /* Reduce top/bottom padding on mobile */
+        padding: var(--spacing-lg) 0;
+    }
+    
+    .poll-section {
+        /* Reduce padding inside poll cards on mobile */
+        padding: var(--spacing-lg);
+    }
+    
+    .poll-header h2 {
+        /* Smaller poll title on mobile */
+        font-size: var(--text-xl);
+        
+        /* Tighter line height for better spacing */
+        line-height: 1.2;
+    }
+    
+    .poll-meta {
+        /* Stack poll metadata vertically on small screens */
+        flex-direction: column;
+        gap: var(--spacing-sm);
+        align-items: center;
+    }
+    
+    .poll-meta span {
+        /* Full width metadata items on mobile */
+        display: block;
+        text-align: center;
+        width: 100%;
+    }
+    
+    .vote-option {
+        /* Reduce padding in vote option cards */
+        padding: var(--spacing-md);
+    }
+    
+    .vote-option-header {
+        /* Stack option name and count vertically on small screens */
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-xs);
+    }
+    
+    .option-name {
+        /* Smaller option names on mobile */
+        font-size: var(--text-base);
+    }
+    
+    .submit-btn, .cancel-btn {
+        /* Full width buttons on mobile */
+        width: 100%;
+        margin-bottom: var(--spacing-sm);
+        margin-right: 0;
+        
+        /* Larger touch targets */
+        padding: var(--spacing-lg);
+    }
+    
+    .selected-option {
+        /* Reduce padding in selected option display */
+        padding: var(--spacing-md);
+    }
+    
+    .transaction-status {
+        /* Reduce padding in transaction status */
+        padding: var(--spacing-lg);
+    }
+    
+    .history-section {
+        /* Reduce padding in history section */
+        padding: var(--spacing-lg);
+    }
+    
+    .activity-item {
+        /* Stack activity items vertically on small screens */
+        flex-direction: column;
+        align-items: flex-start;
+        gap: var(--spacing-sm);
+    }
+    
+    .verify-link {
+        /* Reset margin for stacked layout */
+        margin-left: 0;
+        align-self: flex-end;
+    }
+}
+
+/* 
+=============================================================================
+TABLET STYLES (768px - 1024px)
+=============================================================================
+Styles for tablet devices in both portrait and landscape modes
+*/
+
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* 
+    This targets tablet devices
+    - min-width: 768px means "768px and larger"
+    - max-width: 1024px means "1024px and smaller"
+    - Combined: "between 768px and 1024px"
+    */
+    
+    .app-header .container {
+        /* Horizontal layout for tablets */
+        flex-direction: row;
+    }
+    
+    .tagline {
+        /* Show tagline again on tablets */
+        display: block;
+    }
+    
+    .voting-options {
+        /* Two columns for voting options on tablets */
+        grid-template-columns: 1fr 1fr;
+        gap: var(--spacing-lg);
+    }
+    
+    .footer-content {
+        /* Keep two-column layout for footer on tablets */
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .modal-content {
+        /* Larger modal on tablets */
+        max-width: 500px;
+        margin: var(--spacing-lg);
+    }
+}
+
+/* 
+=============================================================================
+LANDSCAPE PHONE STYLES
+=============================================================================
+Special styles for phones in landscape orientation
+*/
+
+@media (max-height: 500px) and (orientation: landscape) {
+    /* 
+    This targets phones in landscape mode
+    - max-height: 500px targets short screens
+    - orientation: landscape ensures it's in landscape mode
+    */
+    
+    .app-header {
+        /* Reduce header padding in landscape */
+        padding: var(--spacing-md) 0;
+    }
+    
+    .main-content {
+        /* Reduce main content padding in landscape */
+        padding: var(--spacing-lg) 0;
+    }
+    
+    .poll-section {
+        /* Reduce poll section padding in landscape */
+        padding: var(--spacing-lg);
+    }
+    
+    .modal-content {
+        /* Smaller modal in landscape to fit screen */
+        max-height: 70vh;
+        margin: var(--spacing-sm);
+    }
+}
+
+/* 
+=============================================================================
+TOUCH DEVICE OPTIMIZATIONS
+=============================================================================
+Styles specifically for touch devices regardless of screen size
+*/
+
+@media (hover: none) and (pointer: coarse) {
+    /* 
+    This targets touch devices:
+    - hover: none means the device doesn't support hover
+    - pointer: coarse means the primary input is touch (not precise like a mouse)
+    */
+    
+    .vote-option {
+        /* Larger touch targets for voting options */
+        min-height: 80px;
+        
+        /* Remove hover effects since touch devices don't hover */
+        transition: none;
+    }
+    
+    .vote-option:hover {
+        /* Disable hover effects on touch devices */
+        border-color: var(--border-color);
+        box-shadow: none;
+    }
+    
+    .wallet-btn, .submit-btn, .cancel-btn {
+        /* Larger buttons for easier tapping */
+        min-height: 48px;
+        
+        /* Remove hover transform effects on touch */
+        transform: none;
+    }
+    
+    .wallet-btn:hover, .submit-btn:hover, .cancel-btn:hover {
+        /* Disable hover transforms on touch devices */
+        transform: none;
+    }
+    
+    /* Focus styles for accessibility on touch devices */
+    .vote-option:focus,
+    .wallet-btn:focus,
+    .submit-btn:focus,
+    .cancel-btn:focus {
+        /* Clear focus outline for touch interactions */
+        outline: 2px solid var(--primary-color);
+        outline-offset: 2px;
+    }
+}
+
+/* 
+=============================================================================
+HIGH DPI DISPLAY OPTIMIZATIONS
+=============================================================================
+Styles for high-resolution displays (Retina, etc.)
+*/
+
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+    /* 
+    This targets high-DPI displays:
+    - -webkit-min-device-pixel-ratio: 2 targets Retina displays
+    - min-resolution: 192dpi is the standard way to target high-DPI
+    */
+    
+    /* Ensure crisp borders on high-DPI displays */
+    .vote-option,
+    .wallet-info,
+    .poll-section {
+        /* Use fractional pixel borders for crisp rendering */
+        border-width: 0.5px;
+    }
+    
+    /* Ensure icons render crisply */
+    i {
+        /* Prevent icon blurriness on high-DPI displays */
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+    }
+}
+
+/* 
+=============================================================================
+PRINT STYLES
+=============================================================================
+Styles for when the page is printed (educational purposes)
+*/
+
+@media print {
+    /* 
+    These styles apply when someone prints the page
+    Useful for creating educational handouts
+    */
+    
+    /* Hide interactive elements that don't make sense in print */
+    .wallet-section,
+    .vote-submission,
+    .transaction-section,
+    .app-footer {
+        display: none;
+    }
+    
+    /* Ensure good contrast for printing */
+    body {
+        background-color: white;
+        color: black;
+    }
+    
+    .poll-section,
+    .history-section {
+        /* Remove shadows and backgrounds for print */
+        box-shadow: none;
+        border: 1px solid black;
+        background-color: white;
+    }
+    
+    /* Ensure text is readable when printed */
+    .vote-option {
+        border: 1px solid black;
+        background-color: white;
+    }
+    
+    /* Add page breaks for better printing */
+    .poll-section {
+        page-break-inside: avoid;
+    }
+}
+
+/* 
+=============================================================================
+ACCESSIBILITY IMPROVEMENTS
+=============================================================================
+Additional responsive considerations for accessibility
+*/
+
+/* Respect user's motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    /* 
+    This respects users who have set their system to reduce motion
+    Important for users with vestibular disorders
+    */
+    
+    * {
+        /* Remove all animations and transitions */
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+    
+    /* Remove the spinning animation */
+    .loading-spinner i {
+        animation: none;
+    }
+}
+
+/* High contrast mode support */
+@media (prefers-contrast: high) {
+    /* 
+    This targets users who prefer high contrast
+    Helps users with visual impairments
+    */
+    
+    .vote-option {
+        /* Higher contrast borders */
+        border-width: 3px;
+    }
+    
+    .vote-option.selected {
+        /* More obvious selection state */
+        border-width: 4px;
+    }
+    
+    .wallet-btn,
+    .submit-btn {
+        /* Higher contrast buttons */
+        border: 2px solid white;
+    }
+}
+
+/* 
+=============================================================================
+RESPONSIVE TYPOGRAPHY
+=============================================================================
+Adjust font sizes based on screen size for better readability
+*/
+
+/* Smaller screens get slightly smaller text */
+@media (max-width: 480px) {
+    :root {
+        /* Reduce base font sizes on very small screens */
+        --text-xs: 0.7rem;    /* 11.2px */
+        --text-sm: 0.8rem;    /* 12.8px */
+        --text-base: 0.9rem;  /* 14.4px */
+        --text-lg: 1rem;      /* 16px */
+        --text-xl: 1.1rem;    /* 17.6px */
+        --text-2xl: 1.3rem;   /* 20.8px */
+        --text-3xl: 1.6rem;   /* 25.6px */
+    }
+}
+
+/* Larger screens can handle bigger text */
+@media (min-width: 1200px) {
+    :root {
+        /* Slightly increase font sizes on large screens */
+        --text-base: 1.1rem;  /* 17.6px */
+        --text-lg: 1.25rem;   /* 20px */
+        --text-xl: 1.4rem;    /* 22.4px */
+        --text-2xl: 1.7rem;   /* 27.2px */
+        --text-3xl: 2.1rem;   /* 33.6px */
+    }
+}
