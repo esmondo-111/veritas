@@ -417,13 +417,27 @@ function createVotingOptionElement(option, index) {
     console.log('📖 See STUDENT-GUIDE.md Module 2 for instructions');
     
     // Placeholder return to prevent errors
-    const placeholder = document.createElement('div');
-    placeholder.textContent = 'TODO: Complete in Module 2';
-    placeholder.style.padding = '20px';
-    placeholder.style.border = '2px dashed #ccc';
-    placeholder.style.margin = '10px';
-    placeholder.style.textAlign = 'center';
-    return placeholder;
+    const optionElement = document.createElement('div');
+    optionElement.classList.add('vote-option');
+    optionElement.setAttribute('data-option-id', option.id);
+
+    optionElement.innerHTML = `
+        <div class="vote-option-header">
+            <span class="option-name">${option.name}</span>
+            <span class="vote-count">${option.votes} votes</span>
+        </div>
+        <div class="vote-progress">
+            <div class="vote-progress-fill" style="width: 0%"></div>
+        </div>
+        <div class="vote-percentage">0.0%</div>
+    `;
+
+    // Instead of console.log, call selectVotingOption directly
+    optionElement.addEventListener('click', () => {
+        selectVotingOption(option.id);
+    });
+
+    return optionElement;
 }
 
 // TODO 2.2: Complete the createVotingOptions function (Module 2)
@@ -433,9 +447,14 @@ function createVotingOptions() {
     
     // Placeholder implementation
     const container = document.getElementById('voting-options');
-    if (container) {
-        container.innerHTML = '<p style="text-align: center; padding: 20px;">📚 Complete Module 2 to see voting options here!</p>';
-    }
+     if (!container) return;
+
+    container.innerHTML = '';
+
+    AppState.pollOptions.forEach((option, index) => {
+        const optionElement = createVotingOptionElement(option, index);
+        container.appendChild(optionElement);
+    });
 }
 
 // TODO 2.3: Complete the selectVotingOption function (Module 2)
@@ -443,13 +462,70 @@ function selectVotingOption(optionId) {
     // STUDENT TASK (Module 2): Handle voting option selection
     console.log('📝 TODO: Complete this function in Module 2');
     console.log('🎯 Option selected:', optionId);
+    // Check if wallet is connected and user has not voted yet
+ if (!AppState.isWalletConnected) {
+        showErrorMessage('Please connect your wallet first to vote.');
+        return;
+    }
+
+    if (AppState.hasUserVoted) {
+        showErrorMessage('You have already voted! Each wallet can only vote once.');
+        return;
+    }
+
+    AppState.selectedOption = optionId;
+
+    // Highlight the selected option
+    const allOptions = document.querySelectorAll('.vote-option');
+    allOptions.forEach(el => el.classList.remove('selected'));
+
+    const selectedEl = document.querySelector(`[data-option-id="${optionId}"]`);
+    if (selectedEl) {
+        selectedEl.classList.add('selected');
+    }
+
+    // Show the vote submission UI
+    const submitSection = document.getElementById('vote-submit-section');
+    if (submitSection) {
+        submitSection.style.display = 'block';
+    }
+
+    console.log(`✅ User selected option ID ${optionId}, waiting for submission...`);
 }
 
 // TODO 2.4: Complete the updateVotingOptionsDisplay function (Module 2)
 function updateVotingOptionsDisplay() {
     // STUDENT TASK (Module 2): Update visual state of voting options
     console.log('📝 TODO: Complete this function in Module 2');
+       const totalVotes = AppState.options.reduce((sum, option) => sum + option.votes, 0);
+
+    AppState.pollOptions.forEach(option => {
+        const optionEl = document.querySelector(`[data-option-id="${option.id}"]`);
+        if (!optionEl) return;
+
+        // Update vote count
+        const voteCountEl = optionEl.querySelector('.vote-count');
+        if (voteCountEl) {
+            voteCountEl.textContent = `${option.votes} votes`;
+        }
+
+        // Calculate % share
+        const percentage = totalVotes > 0 ? (option.votes / totalVotes) * 100 : 0;
+
+        // Update progress bar
+        const progressFill = optionEl.querySelector('.vote-progress-fill');
+        if (progressFill) {
+            progressFill.style.width = `${percentage.toFixed(1)}%`;
+        }
+
+        // Update percentage text
+        const percentageEl = optionEl.querySelector('.vote-percentage');
+        if (percentageEl) {
+            percentageEl.textContent = `${percentage.toFixed(1)}%`;
+        }
+    });
 }
+
 
 // =============================================================================
 // MODULE 3: WEB3 INTEGRATION (TODO SECTIONS)
